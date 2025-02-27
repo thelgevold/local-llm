@@ -4,8 +4,6 @@ sentence-transformers
 Flask==2.0.1
 Werkzeug==2.2.2
 
-#tiktoken
-
 llama-index
 llama-index-llms-ollama
 llama-index-embeddings-huggingface
