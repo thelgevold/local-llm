@@ -1,6 +1,6 @@
 from pydantic import Field
 
-def get_country_border_info(bordering_countries: list[str] = Field(description="bordering countries that share a physical border")):
+def get_country_border_info(bordering_countries: list[str] = Field(description="bordering countries", default=[])):
     """Usfeful for getting a list of countries that share a physical border with the country"""
     
     bordering_countries.sort()

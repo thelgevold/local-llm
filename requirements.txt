@@ -9,3 +9,7 @@ llama-index-llms-ollama
 llama-index-embeddings-huggingface
 
 wikipedia-api
+
+aiohttp
+beautifulsoup4 
+requests
