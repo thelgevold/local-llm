@@ -1,8 +1,6 @@
 ## Install Dependencies
 
-1) pip install -r requirements.txt
-
-2) docker-compose up
+docker-compose up
 
 ## Download a model
 
