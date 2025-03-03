@@ -6,8 +6,12 @@ docker-compose up
 
 ###Examples:
 
-To download a specific model run the following command in a separate console after running docker-compose up
+To download a specific model run the following command after substituting the model you want (e.g.mistral-nemo, etc). Run this command in a separate console after docker-compose up is already running
+
+docker exec -it ollama-docker ollama run [some model name]
+
+Llama 3.1:
 
 docker exec -it ollama-docker ollama run llama3.1
 
-docker exec -it ollama-docker ollama run mistral-nemo
+
