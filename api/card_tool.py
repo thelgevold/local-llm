@@ -8,7 +8,7 @@ def get_lowest_next_number(current_play: int = Field(description="""current play
     Examine the numbers from the play list that are greater than or equal to the current play first, then select the smallest one. 
     You must alway give priority to selecting numbers from the play list that are equal to the current play over numbers that are greater than the current play.
         
-    After selecting, run a sanity check to ensure that the selected number is actually greater than or equal the current play.
+    After selecting, run a sanity check to ensure that the selected number is actually greater than or equal to the current play.
 
     Here are some examples:
     If the current play is 7 and the numbers from the play list are [7, 9, 12] the correct number is 7 since it is the lowest number that satisfies the condition.
