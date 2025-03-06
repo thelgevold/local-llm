@@ -1,0 +1,37 @@
+<div class="table">
+    <div *ngIf="gameController.winner >=0">
+        Winner is {{gameController.winner}}
+    </div>
+    <div class="pile">
+        <span>
+            <img (click)="pullPile(1)" class="card" src="{{ gameController.currentCard?.imagePath }}" />
+        </span>
+        <span *ngIf="gameController.cardDeck.cards.length > 0">
+            <img class="card" src="/assets/card-images/back.png" />
+        </span>
+    </div>
+    <div class="hand-computer row">
+        <div class="row">
+            <div *ngFor="let card of gameController.players[1].onHand">
+                <img class="card" src="/assets/card-images/back.png" />
+            </div>
+            <div class="row">
+                <div  *ngFor="let card of gameController.players[1].tableCardsFaceUp">
+                    <img class="card" src="/assets/card-images/back.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hand row">
+        <div class="row">
+            <div  *ngFor="let card of gameController.players[0].tableCardsFaceUp">
+                <img (click)="play(card, 1)" class="card" src="{{ card.imagePath }}" />
+            </div>
+        </div>
+        <div class="row">
+            <div  *ngFor="let card of gameController.players[0].onHand">
+                <img (click)="play(card, 0)" class="card" src="{{ card.imagePath }}" />
+            </div>
+        </div>
+    </div>
+</div>

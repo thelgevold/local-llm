@@ -9,21 +9,12 @@ nest_asyncio.apply()
 
 app = Flask(__name__)
 
-@app.route('/api/country', methods=['POST'])
-def get_neighboring_countries():
-    country = request.json['country']
+@app.route('/api/next_card_play', methods=['POST'])
+def next_card():
     
-    response = predict(country)
+    next_card = predict_next_card(request.json)
     
-    return response
-
-@app.route('/api/question', methods=['POST'])
-def post_question():
-    country = request.json['question']
-    
-    response = predict_with_external_link(country)
-
-    return response
+    return next_card
 
 async def main():
     if __name__ == '__main__':

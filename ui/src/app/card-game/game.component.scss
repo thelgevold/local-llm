@@ -1,0 +1,64 @@
+.table {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:green;
+}
+
+.table {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:green;
+}
+
+.card {
+    background-color: white;
+    margin: 20px;
+    height: 100px;
+    width: 50;
+    cursor: pointer;
+}
+
+.hand {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+  }
+
+.hand-computer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+
+.pile {
+    margin-top: 350px;
+    position: fixed;
+    width: 15%;
+    display: flex;
+    z-index: 999;
+    justify-content: left;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }

@@ -13,3 +13,5 @@ wikipedia-api
 aiohttp
 beautifulsoup4 
 requests
+
+pytest
