@@ -16,13 +16,13 @@ def test_case_1():
     assert response.json() == 5  # The smallest number >= 3 is 5
 
 def test_case_2():
-    data = [4, 6, 3]  # Current card: 4, remaining cards: [6, 3]
+    data = [4, 3, 6]  # Current card: 4, remaining cards: [6, 3]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 6  # The smallest number >= 4 is 6
 
 def test_case_3():
-    data = [5, 5, 12, 7]  # Current card: 5, remaining cards: [5, 12, 7]
+    data = [5, 5, 7, 12]  # Current card: 5, remaining cards: [5, 12, 7]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 5  # The smallest number >= 5 is 5
@@ -34,7 +34,7 @@ def test_case_4():
     assert response.json() == 9  # The smallest number >= 7 is 9
 
 def test_case_5():
-    data = [8, 7, 12, 6]  # Current card: 8, remaining cards: [7, 12, 6]
+    data = [8, 7, 6, 12]  # Current card: 8, remaining cards: [7, 12, 6]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 12  # The smallest number >= 8 is 12
@@ -64,7 +64,13 @@ def test_case_9():
     assert response.json() == 4  # The smallest number >= 3 is 4
 
 def test_case_10():
-    data = [9, 11, 7, 5]  # Current card: 9, remaining cards: [11, 7, 5]
+    data = [9, 5, 7, 11]  # Current card: 9, remaining cards: [11, 7, 5]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 11  # The smallest number >= 9 is 11
+    
+def test_case_11():
+    data = [2,  3, 8, 11]  # Current card: 2, remaining cards: [2,  3, 8, 11]
+    response = send_request(data)
+    assert response.status_code == 200
+    assert response.json() == 3  # The smallest number >= 2 is 3 

@@ -9,6 +9,21 @@ services:
       - ollama-docker  
     volumes:
       - ./api:/usr/api
+  # tuning:
+  #   build: ./tuning
+  #   container_name: tuning
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: "all"
+  #             capabilities: [gpu]
+  #   networks:
+  #     - ollama-docker  
+  #   volumes:
+  #     - ./tuning:/usr/tuning
+  #     - ./tuning/model:/usr/model   
 
   ollama-docker:
     image: ollama/ollama:0.4.0

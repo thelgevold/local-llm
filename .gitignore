@@ -2,3 +2,6 @@ __pycache__
 ollama
 node_modules
 **/.angular
+
+tuning/model
+tuning/outputs
