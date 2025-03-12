@@ -1,39 +1,18 @@
 services:
  
-  api:
-    build: .
-    restart: always
-    ports:
-      - "8080:9000"
-    networks:
-      - ollama-docker  
-    volumes:
-      - ./api:/usr/api
-  # uncomment to run fine tuning    
-  # tuning:
-  #   build: ./tuning
-  #   container_name: tuning
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: "all"
-  #             capabilities: [gpu]
+  # api:
+  #   build: .
+  #   restart: always
+  #   ports:
+  #     - "8080:9000"
   #   networks:
   #     - ollama-docker  
   #   volumes:
-  #     - ./tuning:/usr/tuning
-  #     - ./tuning/model:/usr/model   
-
-  ollama-docker:
-    image: ollama/ollama:0.4.0
-    ports:
-      - 11435:11434
-    volumes:
-      - .:/code
-      - ./ollama/ollama:/root/.ollama
-    container_name: ollama-docker
+  #     - ./api:/usr/api
+  # uncomment to run fine tuning    
+  tuning:
+    build: ./tuning
+    container_name: tuning
     deploy:
       resources:
         reservations:
@@ -41,14 +20,35 @@ services:
             - driver: nvidia
               count: "all"
               capabilities: [gpu]
-    pull_policy: always
-    tty: true
-    restart: always
-    environment:
-      - OLLAMA_KEEP_ALIVE=24h
-      - OLLAMA_HOST=0.0.0.0
     networks:
-      - ollama-docker
+      - ollama-docker  
+    volumes:
+      - ./tuning:/usr/tuning
+      - ./tuning/model:/usr/model   
+
+  # ollama-docker:
+  #   image: ollama/ollama:0.4.0
+  #   ports:
+  #     - 11435:11434
+  #   volumes:
+  #     - .:/code
+  #     - ./ollama/ollama:/root/.ollama
+  #   container_name: ollama-docker
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: "all"
+  #             capabilities: [gpu]
+  #   pull_policy: always
+  #   tty: true
+  #   restart: always
+  #   environment:
+  #     - OLLAMA_KEEP_ALIVE=24h
+  #     - OLLAMA_HOST=0.0.0.0
+  #   networks:
+  #     - ollama-docker
    
 networks:
   ollama-docker:

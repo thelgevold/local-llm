@@ -2,7 +2,7 @@ from unsloth import FastLanguageModel
 from trl import SFTTrainer
 from transformers import TrainingArguments
 from unsloth import is_bfloat16_supported
-from datasets import load_dataset, Dataset, concatenate_datasets
+from datasets import Dataset
 import pandas as pd
 import json, yaml
 import torch
@@ -68,8 +68,6 @@ model = FastLanguageModel.get_peft_model(
     loftq_config=None,
 )
 
-dataset = dataset.train_test_split(test_size = 0.01)
-
 trainer = SFTTrainer(
     model = model,
     tokenizer = tokenizer,
@@ -95,8 +93,7 @@ trainer = SFTTrainer(
         seed = 3407,
         output_dir = "/usr/tuning/outputs",
     ),
-    train_dataset = dataset["train"],
-    eval_dataset = dataset["test"],
+    train_dataset = dataset
 )
 
 trainer_stats = trainer.train()
