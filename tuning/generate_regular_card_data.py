@@ -48,6 +48,6 @@ def main(num_entries, output_file):
     print(f"Dataset with {num_entries} entries has been saved to {output_file}")
 
 if __name__ == "__main__":
-    num_entries = 2000
+    num_entries = 300
     output_file ='./output.json'
     main(num_entries, output_file)

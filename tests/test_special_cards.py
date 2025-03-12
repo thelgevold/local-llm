@@ -13,14 +13,20 @@ def test_case_1():
     assert response.status_code == 200
     assert response.json() == 2
 
-def test_case_1():
+def test_case_2():
     data = [7, 10, 3, 5]  # Current card: 7, remaining cards: [10, 3, 5]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 10  
 
-def test_case_1():
+def test_case_3():
     data = [7, 10, 2, 5]  # Current card: 7, remaining cards: [10, 2, 5]
     response = send_request(data)
     assert response.status_code == 200
     assert response.json() == 2      
+
+def test_case_3():
+    data = [8, 10]  # Current card: 8, remaining cards: [10]
+    response = send_request(data)
+    assert response.status_code == 200
+    assert response.json() == 10

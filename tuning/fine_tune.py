@@ -74,7 +74,7 @@ df2 = pd.DataFrame(json_f)
 dataset2 = Dataset.from_pandas(df2)
 dataset2 = dataset2.map(formatting_prompts_func_special_cards, batched = True,)
 
-dataset = concatenate_datasets([dataset1, dataset2])
+dataset = dataset1 #concatenate_datasets([dataset1, dataset2])
 
 model = FastLanguageModel.get_peft_model(
     model,
@@ -151,18 +151,3 @@ outputs = model.generate(**inputs1, max_new_tokens = 500, use_cache = True)
 generated1 = tokenizer.batch_decode(outputs)
 
 print(generated1)
-
-inputs2 = tokenizer(
-[
-    alpaca_prompt_special_cards.format(
-        #"Find the smallest integer in the playlist that is greater than or equal to the current play. If no such number exists, return 0.", # instruction
-        "{[3, 4, 5, 6, 7, 92, 10]}", # input
-        "", # output - leave this blank for generation!
-    )
-], return_tensors = "pt").to("cuda")
-
-outputs = model.generate(**inputs2, max_new_tokens = 500, use_cache = True)
-generated2 = tokenizer.batch_decode(outputs)
-
-print(generated2)
-
