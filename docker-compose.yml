@@ -9,6 +9,7 @@ services:
       - ollama-docker  
     volumes:
       - ./api:/usr/api
+  # uncomment to run fine tuning    
   # tuning:
   #   build: ./tuning
   #   container_name: tuning

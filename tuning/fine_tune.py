@@ -11,7 +11,7 @@ max_seq_length = 1024
 dtype = None 
 
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name = "meta-llama/Llama-3.1-8B",#"unsloth/Meta-Llama-3.1-8B-bnb-4bit",
+    model_name = "meta-llama/Llama-3.1-8B",
     max_seq_length = max_seq_length,
     dtype = dtype,
     load_in_4bit=True
@@ -28,19 +28,7 @@ Find the smallest integer in the playlist that is greater than or equal to the c
 ### Response:
 {}"""
 
-alpaca_prompt_special_cards  = """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
-
-### Instruction:
-Given an array of numbers, your task is to select the first occurrence of either a 2 or a 10. If both exist, select the 2 (giving priority to 2 over 10). If neither 2 nor 10 is found in the array, return 0.
-
-### Input:
-{}
-
-### Response:
-{}"""
-
-
-EOS_TOKEN = tokenizer.eos_token # Must add EOS_TOKEN
+EOS_TOKEN = tokenizer.eos_token
 
 def formatting_prompts_func_regular_cards(examples):
     inputs       = examples["input"]
@@ -51,30 +39,12 @@ def formatting_prompts_func_regular_cards(examples):
         texts.append(text)
     return { "text" : texts, }
 
-def formatting_prompts_func_special_cards(examples):
-    inputs       = examples["input"]
-    outputs      = examples["output"]
-    texts = []
-    for input, output in zip(inputs, outputs):
-        text = alpaca_prompt_special_cards.format(input, output) + EOS_TOKEN
-        texts.append(text)
-    return { "text" : texts, }
-
 with open('/usr/tuning/output.json', 'r') as f:
     json_f = yaml.safe_load(f.read())
 
 df1 = pd.DataFrame(json_f)
-dataset1 = Dataset.from_pandas(df1)
-dataset1 = dataset1.map(formatting_prompts_func_regular_cards, batched = True,)
-
-with open('/usr/tuning/output-special-cards.json', 'r') as f:
-    json_f = yaml.safe_load(f.read())
-
-df2 = pd.DataFrame(json_f)
-dataset2 = Dataset.from_pandas(df2)
-dataset2 = dataset2.map(formatting_prompts_func_special_cards, batched = True,)
-
-dataset = dataset1 #concatenate_datasets([dataset1, dataset2])
+dataset = Dataset.from_pandas(df1)
+dataset = dataset.map(formatting_prompts_func_regular_cards, batched = True,)
 
 model = FastLanguageModel.get_peft_model(
     model,
@@ -106,14 +76,14 @@ trainer = SFTTrainer(
     dataset_text_field = "text",
     max_seq_length = max_seq_length,
     dataset_num_proc = 2,
-    packing = False, # Can make training 5x faster for short sequences.
+    packing = False,
     args = TrainingArguments(
         per_device_train_batch_size = 2,
         per_device_eval_batch_size = 2,
         gradient_accumulation_steps = 4,
         eval_accumulation_steps = 4,
         warmup_steps = 5,
-        num_train_epochs = 150, # Set this for 1 full training run.
+        num_train_epochs = 150,
         max_steps = 150,
         learning_rate = 2e-4,
         fp16 = not is_bfloat16_supported(),
@@ -131,13 +101,13 @@ trainer = SFTTrainer(
 
 trainer_stats = trainer.train()
 
-model.save_pretrained("lora_model") # Local saving
+model.save_pretrained("lora_model")
 tokenizer.save_pretrained("lora_model")
 
 model.save_pretrained_gguf("model", tokenizer, maximum_memory_usage = 0.3)
 
 
-FastLanguageModel.for_inference(model) # Enable native 2x faster inference
+FastLanguageModel.for_inference(model)
 inputs1 = tokenizer(
 [
     alpaca_prompt_regular_cards.format(
